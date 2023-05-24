@@ -1,16 +1,3 @@
-# sample_project
+# Vaahika
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+In the existing scenario, scheduling of college and school buses are done in a static manner with pre-defined, fixed routes, that may or may not be the most optimal solution under the given circumstances. A sudden change in the location of a student or the lack of a driver or a bus on a day can become a burden for the bus scheduling. In this project, we present a bus scheduling model developed using Combinatorial Optimisation algorithms. The system uses historical data on passenger demand and bus operations to generate schedules. The model developed will be dynamic, i.e it can be updated to reflect the best solution as and when changes relating to change in location, existing traffic conditions, etc are made to the system. Stops are decided based on the location of students and density of students in an area, and buses are scheduled among these stops. The best possible solution is found within a given set of constraints such as number of buses and drivers available, carrying capacity of the buses and minimal distance and waiting time. The proposed model alleviates unnecessary waiting time and delay, higher fuel consumption and longer travel time as compared to the existing system. A mobile application is to be developed implementing the model. Students can log in to this app and track the buses in real time using GPS. The app also provides an estimated arrival time and expected delay, if any, for a given stop. Our proposed system provides a practical and efficient approach for optimizing bus scheduling in the college management system.
