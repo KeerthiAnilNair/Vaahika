@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sample_project/student_personal_details.dart';
 
 class StudentHome extends StatelessWidget {
   const StudentHome({super.key});
@@ -27,7 +28,8 @@ class StudentHome extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const StudentHome()),
+                  MaterialPageRoute(
+                      builder: (context) => const StudentPersonalDetails()),
                 );
               },
               style: ElevatedButton.styleFrom(
