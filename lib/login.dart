@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/signup.dart';
 import 'package:sample_project/studenthome.dart';
+import 'package:sample_project/adminhome.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -52,7 +53,7 @@ class Login extends StatelessWidget {
                     hintText: 'Enter Username',
                   ),
                 ),
-                Text(
+                const Text(
                   'Password : ',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -71,7 +72,7 @@ class Login extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const StudentHome()),
+                          builder: (context) => const AdminHome()), //NAVIGATION
                     );
                   },
                   child: Text('SUBMIT'),
