@@ -1,17 +1,43 @@
 import 'dart:ui';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/signup.dart';
 import 'package:sample_project/studenthome.dart';
 import 'package:sample_project/adminhome.dart';
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  String userType = 'Student'; // Default value
+
+  List<String> userTypes = ['Student', 'Driver', 'Admin'];
+
+  void handleSubmit() {
+    if (userType == 'Student') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => StudentHome()),
+      );
+    } else if (userType == 'Driver') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => StudentHome()),
+      );
+    } else if (userType == 'Admin') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AdminHome()),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
@@ -53,6 +79,29 @@ class Login extends StatelessWidget {
                     hintText: 'Enter Username',
                   ),
                 ),
+                Text(
+                  'User Type : ',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Arvo',
+                    fontSize: 20,
+                  ),
+                ),
+                DropdownButton<String>(
+                  value: userType,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      userType = newValue!;
+                    });
+                  },
+                  items:
+                      userTypes.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
                 const Text(
                   'Password : ',
                   textAlign: TextAlign.center,
@@ -68,13 +117,7 @@ class Login extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const AdminHome()), //NAVIGATION
-                    );
-                  },
+                  onPressed: handleSubmit,
                   child: Text('SUBMIT'),
                 ),
                 RichText(

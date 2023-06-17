@@ -2,13 +2,41 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/login.dart';
 import 'package:sample_project/studenthome.dart';
+import 'package:sample_project/adminhome.dart';
 
-class SignUp extends StatelessWidget {
-  const SignUp({super.key});
+class SignUp extends StatefulWidget {
+  @override
+  _SignUpState createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  String userType = 'Student'; // Default value
+
+  List<String> userTypes = ['Student', 'Driver', 'Admin'];
+
+  void handleSubmit() {
+    if (userType == 'Student') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => StudentHome()),
+      );
+    } else if (userType == 'Driver') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => StudentHome()),
+      );
+    } else if (userType == 'Admin') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AdminHome()),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
@@ -72,11 +100,20 @@ class SignUp extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Select User Type',
-                  ),
+                DropdownButton<String>(
+                  value: userType,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      userType = newValue!;
+                    });
+                  },
+                  items:
+                      userTypes.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
                 Text(
                   'Password : ',
@@ -93,13 +130,7 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const StudentHome()),
-                    );
-                  },
+                  onPressed: handleSubmit,
                   child: Text('SUBMIT'),
                 ),
                 RichText(
@@ -124,8 +155,7 @@ class SignUp extends StatelessWidget {
                           ..onTap = () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Login()),
+                              MaterialPageRoute(builder: (context) => Login()),
                             );
                           },
                       ),

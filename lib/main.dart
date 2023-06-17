@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
           color: Colors.blue[800],
         ),
       ),
-      home: const Login(),
+      home: Login(),
     );
   }
 }
