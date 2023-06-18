@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sample_project/inddriv_details.dart';
 
 class DriverDetails extends StatelessWidget {
   const DriverDetails({super.key});
@@ -19,13 +20,20 @@ class DriverDetails extends StatelessWidget {
           child: ListView.separated(
               itemBuilder: (ctx, index) {
                 return ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const DriverDetailsAdmin()), //NAVIGATION
+                    );
+                  },
                   title: Text('Name'),
                   subtitle: Text('Username'),
-                  leading: const CircleAvatar(
-                    radius: 25,
-                    backgroundImage: AssetImage('assets/images/user.png'),
-                  ),
+                  // leading: const CircleAvatar(
+                  //   radius: 25,
+                  //   backgroundImage: AssetImage('assets/images/user.png'),
+                  // ),
                   // trailing: Text('0'),
                 );
               },
