@@ -71,7 +71,7 @@ class DriverHome extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 primary: Colors.orange[200], // Background color
               ),
-              child: Text('Seat Availablity'),
+              child: Text('Set Availablity'),
             ),
           ],
         ),

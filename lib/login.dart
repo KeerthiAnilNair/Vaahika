@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sample_project/signup.dart';
 import 'package:sample_project/studenthome.dart';
 import 'package:sample_project/adminhome.dart';
+import 'package:sample_project/driverhome.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  String userType = 'Student'; // Default value
+  String? userType; // Default value
 
   List<String> userTypes = ['Student', 'Driver', 'Admin'];
 
@@ -24,7 +25,7 @@ class _LoginState extends State<Login> {
     } else if (userType == 'Driver') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => StudentHome()),
+        MaterialPageRoute(builder: (context) => DriverHome()),
       );
     } else if (userType == 'Admin') {
       Navigator.push(
@@ -87,8 +88,9 @@ class _LoginState extends State<Login> {
                     fontSize: 20,
                   ),
                 ),
-                DropdownButton<String>(
+                DropdownButtonFormField<String>(
                   value: userType,
+                  hint: Text('Select User Type'),
                   onChanged: (String? newValue) {
                     setState(() {
                       userType = newValue!;
@@ -101,6 +103,17 @@ class _LoginState extends State<Login> {
                       child: Text(value),
                     );
                   }).toList(),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: 12,
+                      horizontal: 10,
+                    ),
+                  ),
                 ),
                 const Text(
                   'Password : ',

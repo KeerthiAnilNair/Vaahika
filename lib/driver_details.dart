@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sample_project/inddriv_details.dart';
+import 'package:sample_project/indriv_details.dart';
 
 class DriverDetails extends StatelessWidget {
   const DriverDetails({super.key});
