@@ -9,7 +9,7 @@ class StudentDetails extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Student Details',
+          'Vaahika',
           style: TextStyle(
             fontFamily: 'LakkiReddy',
             fontSize: 36,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sample_project/driver_details.dart';
 import 'package:sample_project/student_details.dart';
+import 'package:sample_project/manage_route.dart';
 
 class AdminHome extends StatelessWidget {
   const AdminHome({super.key});
@@ -53,7 +54,15 @@ class AdminHome extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ElevatedButton(onPressed: () {}, child: Text('Manage Bus')),
-                ElevatedButton(onPressed: () {}, child: Text('Manage Routes'))
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ManageRoutes()),
+                      );
+                    },
+                    child: Text('Manage Routes'))
               ],
             ),
           ],
