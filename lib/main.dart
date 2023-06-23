@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
-import 'package:flutter/gestures.dart';
-import 'dart:async';
-import 'signup.dart';
 import 'package:sample_project/login.dart';
 
 void main() {
@@ -15,6 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.indigo,
         appBarTheme: AppBarTheme(

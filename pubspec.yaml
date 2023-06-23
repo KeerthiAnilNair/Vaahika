@@ -37,7 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_material_color_picker: ^1.1.0+2
   splashscreen: ^1.2.0
+  localstorage: ^4.0.0+1
   google_maps_flutter: ^2.3.0
+  http: ^0.13.6
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/login.dart';
@@ -15,8 +17,17 @@ class _SignUpState extends State<SignUp> {
 
   List<String> userTypes = ['Student', 'Driver', 'Admin'];
 
-  void handleSubmit() {
+  void handleSubmit() async{
     if (userType == 'Student') {
+      final res=await http.post(Uri.parse("http://localhost:8000/create-student"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'userName': "a",
+        'password': "123",
+      }),);
+      print(res.body);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => StudentHome()),

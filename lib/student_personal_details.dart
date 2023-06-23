@@ -1,17 +1,61 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-
-class StudentPersonalDetails extends StatelessWidget {
+import 'package:localstorage/localstorage.dart';
+import 'package:http/http.dart' as http;
+class StudentPersonalDetails extends StatefulWidget {
   const StudentPersonalDetails({super.key});
-  final String profileImageUrl =
-      'https://example.com/profile-picture.jpg'; // Replace with your profile picture URL
-  final String name = 'John Doe'; // Replace with your name
-  final String year = '2023'; // Replace with your year
-  final String department = 'Computer Science'; // Replace with your department
-  final String phoneNumber = '+1 234 567 890'; // Replace with your phone number
-  final String emailId = 'john.doe@example.com'; // Replace with your email ID
-  final String address =
-      '123 Main Street, City, Country'; // Replace with your address
 
+  @override
+  State<StudentPersonalDetails> createState() => _StudentPersonalDetailsState();
+}
+
+class _StudentPersonalDetailsState extends State<StudentPersonalDetails> {
+  final String profileImageUrl =
+      'https://example.com/profile-picture.jpg'; 
+
+  var stop='';
+  bool loading=false;
+  late Map<String,dynamic> Student;
+  
+
+ Future<void> getStudent() async{
+    LocalStorage storage = LocalStorage('data');
+    final token=storage.getItem('token');
+
+    var res=await http.get(Uri.parse("http://localhost:8000/student/me"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization':token,
+      },
+    );
+
+    var studentData=json.decode(res.body);
+
+    if(studentData['status']=="ok"){
+      setState(() {
+        Student=studentData["data"];
+        stop=studentData['stop']['stop_name'];
+        loading=false;
+      });
+      // name=studentData['data']['studentName'];
+      // phoneNumber=studentData['data']['phone'];
+      // emailId=studentData['data']['email'];
+      // address=studentData['data']['address'];
+    
+      // stop=studentData['stop']['stop_name'];
+      print(studentData['data']);
+
+    }
+ }
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      loading=true;
+    });
+    getStudent();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +70,14 @@ class StudentPersonalDetails extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
+      body: loading?Container(
+        height: MediaQuery.of(context).size.height,
+        child:Center(
+          child: CircularProgressIndicator(backgroundColor: Colors.cyan),
+        )
+      ):
+      
+      SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -34,13 +85,13 @@ class StudentPersonalDetails extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 80.0,
-              backgroundImage: Image.network(
-                'https://example.com/profile-picture.jpg',
+              backgroundImage: Image.asset(
+                './assets/images/user.png',
               ).image,
             ),
             SizedBox(height: 16.0),
             Text(
-              name,
+              Student['studentName'].toString(),
               style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8.0),
@@ -66,6 +117,11 @@ class StudentPersonalDetails extends StatelessWidget {
             SizedBox(height: 8.0),
             Text(
               'Address: $address',
+              style: TextStyle(fontSize: 18.0),
+            ),
+            SizedBox(height: 8.0),
+            Text(
+              'Bus Stop: $stop',
               style: TextStyle(fontSize: 18.0),
             ),
             SizedBox(height: 16.0),

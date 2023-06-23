@@ -5,7 +5,9 @@ import 'package:sample_project/signup.dart';
 import 'package:sample_project/studenthome.dart';
 import 'package:sample_project/adminhome.dart';
 import 'package:sample_project/driverhome.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:localstorage/localstorage.dart';
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -13,25 +15,55 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   String? userType; // Default value
-
+   LocalStorage storage = LocalStorage('data');
   List<String> userTypes = ['Student', 'Driver', 'Admin'];
+  String userName='';
+  String password='';
+  void handleSubmit() async{
+    
 
-  void handleSubmit() {
     if (userType == 'Student') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => StudentHome()),
-      );
+      var res=await http.post(Uri.parse("http://localhost:8000/student-login"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'userName': userName,
+        'password': password
+      }),);
+      var userData=json.decode(res.body);
+      print(userData);
+      if(userData['status']=="ok"){
+          storage.setItem('token',userData['token']);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => StudentHome()),
+        );
+      }
+     
     } else if (userType == 'Driver') {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => DriverHome()),
       );
     } else if (userType == 'Admin') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => AdminHome()),
-      );
+      var res=await http.post(Uri.parse("http://localhost:8000/admin-login"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'email': userName,
+        'password': password
+      }),);
+      var userData=json.decode(res.body);
+  
+      if(userData['status']=="ok"){
+          storage.setItem('token',userData['token']);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AdminHome()),
+        );
+      }
     }
   }
 
@@ -75,10 +107,16 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 TextField(
+                  
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter Username',
                   ),
+                  onChanged: (String newValue) {
+                    setState(() {
+                      userName = newValue;
+                    });
+                  },
                 ),
                 Text(
                   'User Type : ',
@@ -124,10 +162,16 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 TextField(
+                  
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter Password',
                   ),
+                  onChanged: (String newValue) {
+                    setState(() {
+                      password = newValue;
+                    });
+                  },
                 ),
                 ElevatedButton(
                   onPressed: handleSubmit,
