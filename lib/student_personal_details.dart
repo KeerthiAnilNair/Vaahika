@@ -14,6 +14,11 @@ class _StudentPersonalDetailsState extends State<StudentPersonalDetails> {
   final String profileImageUrl =
       'https://example.com/profile-picture.jpg'; 
 
+  final String year = '2023'; 
+ // Replace with your year
+  final String department = 'Computer Science'; 
+ // Replace with your department
+
   var stop='';
   bool loading=false;
   late Map<String,dynamic> Student;
@@ -38,14 +43,8 @@ class _StudentPersonalDetailsState extends State<StudentPersonalDetails> {
         stop=studentData['stop']['stop_name'];
         loading=false;
       });
-      // name=studentData['data']['studentName'];
-      // phoneNumber=studentData['data']['phone'];
-      // emailId=studentData['data']['email'];
-      // address=studentData['data']['address'];
-    
-      // stop=studentData['stop']['stop_name'];
-      print(studentData['data']);
-
+     
+      
     }
  }
   @override
@@ -73,11 +72,10 @@ class _StudentPersonalDetailsState extends State<StudentPersonalDetails> {
       body: loading?Container(
         height: MediaQuery.of(context).size.height,
         child:Center(
-          child: CircularProgressIndicator(backgroundColor: Colors.cyan),
+          child: 
+          CircularProgressIndicator(backgroundColor: Colors.cyan),
         )
-      ):
-      
-      SingleChildScrollView(
+      ):SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -106,17 +104,17 @@ class _StudentPersonalDetailsState extends State<StudentPersonalDetails> {
             ),
             SizedBox(height: 8.0),
             Text(
-              'Phone Number: $phoneNumber',
+              'Phone Number: ${Student['phone']}',
               style: TextStyle(fontSize: 18.0),
             ),
             SizedBox(height: 8.0),
             Text(
-              'Email: $emailId',
+              'Email: ${Student['email']}',
               style: TextStyle(fontSize: 18.0),
             ),
             SizedBox(height: 8.0),
             Text(
-              'Address: $address',
+              'Address: ${Student['address']}',
               style: TextStyle(fontSize: 18.0),
             ),
             SizedBox(height: 8.0),
