@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sample_project/alloted_route.dart';
+import 'package:sample_project/alloted_bus.dart';
 import 'package:sample_project/student_personal_details.dart';
 
 class DriverHome extends StatelessWidget {
@@ -41,7 +43,7 @@ class DriverHome extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const DriverHome()),
+                  MaterialPageRoute(builder: (context) => AllotedBus()),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -53,7 +55,8 @@ class DriverHome extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const DriverHome()),
+                  MaterialPageRoute(
+                      builder: (context) => const AllotedRoute()),
                 );
               },
               style: ElevatedButton.styleFrom(
