@@ -38,28 +38,32 @@ class BusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(16.0),
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Bus Details: $busNumber',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
+    return Container(
+      height: 300,
+      width: 500,
+      child: Card(
+        margin: EdgeInsets.all(16.0),
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Bus Details: $busNumber',
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            SizedBox(height: 8.0),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: routes.map((route) => Text('- $route')).toList(),
-            ),
-          ],
+              SizedBox(height: 16.0),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: routes.map((route) => Text('- $route')).toList(),
+              ),
+            ],
+          ),
         ),
-      ),
+      )
     );
   }
 }
