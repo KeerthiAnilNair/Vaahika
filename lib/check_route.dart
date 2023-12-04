@@ -11,7 +11,7 @@ class CheckRoute extends StatefulWidget {
 class _CheckRouteState extends State<CheckRoute> {
   late GoogleMapController mapController;
 
-  final LatLng _center = const LatLng(45.521563, -122.677433);
+  final LatLng _center = const LatLng(8.5458, 76.9063);
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;

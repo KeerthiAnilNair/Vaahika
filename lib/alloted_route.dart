@@ -14,7 +14,7 @@ class _AllotedRouteState extends State<AllotedRoute> {
   Completer<GoogleMapController> _controller = Completer();
   //on below line we have set the camera position
   static final CameraPosition _kGoogle = const CameraPosition(
-    target: LatLng(19.0759837, 72.8776559),
+    target: LatLng(8.5458, 76.9063),
     zoom: 14,
   );
 
@@ -22,12 +22,12 @@ class _AllotedRouteState extends State<AllotedRoute> {
   final Set<Polyline> _polyline = {};
 
   List<LatLng> latLen = [
-    LatLng(19.0759837, 72.8776559),
-    LatLng(28.679079, 77.069710),
-    LatLng(26.850000, 80.949997),
-    LatLng(24.879999, 74.629997),
-    LatLng(16.166700, 74.833298),
-    LatLng(12.971599, 77.594563),
+    LatLng(8.5458, 76.9063),
+    LatLng(8.5539, 76.9153),
+    LatLng(8.5206, 76.942),
+    LatLng(8.5027, 76.9485),
+    LatLng(8.4887, 76.9521),
+    LatLng(8.5458, 76.9063),
   ];
   @override
   void initState() {
@@ -41,10 +41,6 @@ class _AllotedRouteState extends State<AllotedRoute> {
           Marker(
         markerId: MarkerId(i.toString()),
         position: latLen[i],
-        infoWindow: InfoWindow(
-          title: 'HOTEL',
-          snippet: '5 Star Hotel',
-        ),
         icon: BitmapDescriptor.defaultMarker,
       ));
       setState(() {});
