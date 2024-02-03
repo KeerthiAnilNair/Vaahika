@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:sample_project/driver_details.dart';
 import 'package:sample_project/student_details.dart';
@@ -58,8 +60,7 @@ class AdminHome extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => ManageRoutes()),
+                        MaterialPageRoute(builder: (context) => ManageRoutes()),
                       );
                     },
                     child: Text('Manage Routes'))

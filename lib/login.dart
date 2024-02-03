@@ -8,6 +8,7 @@ import 'package:sample_project/driverhome.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:localstorage/localstorage.dart';
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -15,50 +16,46 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   String? userType; // Default value
-   LocalStorage storage = LocalStorage('data');
+  LocalStorage storage = LocalStorage('data');
   List<String> userTypes = ['Student', 'Driver', 'Admin'];
-  String userName='';
-  String password='';
-  void handleSubmit() async{
-    
-
+  String userName = '';
+  String password = '';
+  void handleSubmit() async {
     if (userType == 'Student') {
-      var res=await http.post(Uri.parse("http://localhost:8000/student-login"),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'userName': userName,
-        'password': password
-      }),);
-      var userData=json.decode(res.body);
+      var res = await http.post(
+          Uri.parse("http://localhost:8000/student-login"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(
+              <String, String>{'userName': userName, 'password': password}));
+      var userData = json.decode(res.body);
       print(userData);
-      if(userData['status']=="ok"){
-          storage.setItem('token',userData['token']);
+      if (userData['status'] == "ok") {
+        storage.setItem('token', userData['token']);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => StudentHome()),
         );
+      } else {
+        print(userData['msg']);
       }
-     
     } else if (userType == 'Driver') {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => DriverHome()),
       );
     } else if (userType == 'Admin') {
-      var res=await http.post(Uri.parse("http://localhost:8000/admin-login"),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'email': userName,
-        'password': password
-      }),);
-      var userData=json.decode(res.body);
-  
-      if(userData['status']=="ok"){
-          storage.setItem('token',userData['token']);
+      var res = await http.post(Uri.parse("http://localhost:8000/admin-login"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(
+              <String, String>{'email': userName, 'password': password}));
+      var userData = json.decode(res.body);
+
+      if (userData['status'] == "ok") {
+        storage.setItem('token', userData['token']);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => AdminHome()),
@@ -107,7 +104,6 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 TextField(
-                  
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter Username',
@@ -162,7 +158,6 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 TextField(
-                  
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter Password',
