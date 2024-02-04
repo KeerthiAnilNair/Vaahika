@@ -12,35 +12,47 @@ class StudentHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width100 = MediaQuery.of(context).size.width;
+    double height100 = MediaQuery.of(context).size.height;
+    double cardwidth = width100 * 0.8;
+    double cardheight= height100 * 0.125;
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Vaahika',
-          style: TextStyle(
-            fontFamily: 'LakkiReddy',
-            fontSize: 36,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(height100 * 0.25),
+        child: AppBar(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(40),
+                  bottomRight: Radius.circular(40))),
+          backgroundColor: Color(0xFF183536),
+          foregroundColor: Colors.white,
+          centerTitle: true,
+          elevation: 0,
+          flexibleSpace: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 20, bottom: 30),
+                child: StudentDetailsCard(
+                  height: height100 * 0.15,
+                  width: width100 * 0.85,
+                  cardColor: Color(0xFFdaf3ed),
+                  name: 'John Doe',
+                  admissionNumber: '211512',
+                  profileImage: 'assets/images/user.png',
+                ),
+              ),
+              // Add other widgets or components if needed
+            ],
           ),
         ),
       ),
-      
       body: Scaffold(
         body: Padding(
           padding: EdgeInsets.only(top: width100 * 0.05),
           child: Column(
             children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: StudentDetailsCard(
-                    name: 'John Doe',
-                    admissionNumber: '211512',
-                    profileImage: 'assets/images/user.png'),
-              ),
-              SizedBox(
-                height: 30,
-              ),
               Expanded(
                 child: Align(
                   alignment: Alignment.bottomCenter,
@@ -48,239 +60,82 @@ class StudentHome extends StatelessWidget {
                     height: MediaQuery.of(context).size.height,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(200),
-                          topRight: Radius.circular(200)),
                       color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: Offset(0, -7), // changes position of shadow
-                        ),
-                      ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(35.0),
+                      padding: const EdgeInsets.only(bottom: 40,top: 20),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const StudentPersonalDetails()),
-                                  );
-                                },
-                                child: Container(
-                                  width:
-                                      144, // Adjust the width according to your preference
-                                  height:
-                                      127, // Adjust the height according to your preference
-                                  decoration: BoxDecoration(
-                                    color: Color.fromARGB(
-                                        255, 223, 254, 199), // Background color
-                                    borderRadius: BorderRadius.circular(30),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 2,
-                                        blurRadius: 5,
-                                        offset: Offset(
-                                            3, 3), // changes position of shadow
-                                      ),
-                                    ], // Optional: Round corners
-                                  ),
-                                  child: Column(
-                                    // ignore: prefer_const_literals_to_create_immutables
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/personaldetails.png',
-                                        width: 65,
-                                        height: 65,
-                                      ),
-                                      Text(
-                                        textAlign: TextAlign.center,
-                                        'Personal Details',
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(
-                                              95, 88, 88, 1), // Text color
-                                          fontFamily: 'Laila',
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                          ActionCard(
+                            imagePath: 'assets/images/personaldetails.png',
+                            title: 'Personal Details',
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const StudentPersonalDetails(),
                                 ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Student student = Student(
-                                    name: 'John Doe',
-                                    admissionNumber: 'ABCD1234',
-                                    fees: 500,
-                                  );
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            StudentPaymentsPage(
-                                                student: student)),
-                                  );
-                                },
-                                child: Container(
-                                  width:
-                                      144, // Adjust the width according to your preference
-                                  height: 127, // Make it a square
-                                  decoration: BoxDecoration(
-                                    color: Color.fromARGB(
-                                        255, 255, 220, 254), // Background color
-                                    borderRadius: BorderRadius.circular(30),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 2,
-                                        blurRadius: 5,
-                                        offset: Offset(
-                                            3, 3), // changes position of shadow
-                                      ),
-                                    ], // Optional: Round corners
-                                  ),
-                                  child: Column(
-                                    // ignore: prefer_const_literals_to_create_immutables
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/payfees.png',
-                                        width: 65,
-                                        height: 65,
-                                      ),
-                                      Text(
-                                        textAlign: TextAlign.center,
-                                        'Pay Fees',
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(
-                                              95, 88, 88, 1), // Text color
-                                          fontFamily: 'Laila',
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
-                            ],
+                              );
+                            },
+                            width: cardwidth,
+                            height: cardheight,
+                            backgroundColor: Color(0xFF8eb1d2),
                           ),
-                          SizedBox(height: 30),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const CheckRoute()),
-                                  );
-                                },
-                                child: Container(
-                                  width:
-                                      144, // Adjust the width according to your preference
-                                  height:
-                                      127, // Adjust the height according to your preference
-                                  decoration: BoxDecoration(
-                                    color: Color.fromARGB(
-                                        255, 199, 228, 254), // Background color
-                                    borderRadius: BorderRadius.circular(30),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 2,
-                                        blurRadius: 5,
-                                        offset: Offset(
-                                            3, 3), // changes position of shadow
-                                      ),
-                                    ], // Optional: Round corners
-                                  ),
-                                  child: Column(
-                                    // ignore: prefer_const_literals_to_create_immutables
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/checkroute.png',
-                                        width: 65,
-                                        height: 65,
-                                      ),
-                                      Text(
-                                        textAlign: TextAlign.center,
-                                        'Check Route',
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(
-                                              95, 88, 88, 1), // Text color
-                                          fontFamily: 'Laila',
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                          
+                          ActionCard(
+                            imagePath: 'assets/images/payfees.png',
+                            title: 'Pay Fees',
+                            onTap: () {
+                              Student student = Student(
+                                name: 'John Doe',
+                                admissionNumber: 'ABCD1234',
+                                fees: 500,
+                              );
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      StudentPaymentsPage(student: student),
                                 ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => StudentHome()),
-                                  );
-                                },
-                                child: Container(
-                                  width:
-                                      144, // Adjust the width according to your preference
-                                  height:
-                                      127, // Adjust the height according to your preference
-                                  decoration: BoxDecoration(
-                                    color: Color.fromARGB(
-                                        255, 254, 235, 199), // Background color
-                                    borderRadius: BorderRadius.circular(30),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 2,
-                                        blurRadius: 5,
-                                        offset: Offset(
-                                            3, 3), // changes position of shadow
-                                      ),
-                                    ], // Optional: Round corners
-                                  ),
-                                  child: Column(
-                                    // ignore: prefer_const_literals_to_create_immutables
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/updatelocation.png',
-                                        width: 65,
-                                        height: 65,
-                                      ),
-                                      Text(
-                                        textAlign: TextAlign.center,
-                                        'Update Location',
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(
-                                              95, 88, 88, 1), // Text color
-                                          fontFamily: 'Laila',
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                              );
+                            },
+                            width: cardwidth,
+                            height: cardheight,
+                            backgroundColor: Color(0xFFffeddc),
+                          ),
+                          
+                          ActionCard(
+                            imagePath: 'assets/images/checkroute.png',
+                            title: 'Check Route',
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const CheckRoute(),
                                 ),
-                              ),
-                            ],
-                          )
+                              );
+                            },
+                            width: cardwidth,
+                            height: cardheight,
+                            backgroundColor: Color(0xFFebe4ce),
+                          ),
+                          ActionCard(
+                            imagePath: 'assets/images/updatelocation.png',
+                            title: 'Update Location',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => StudentHome(),
+                                ),
+                              );
+                            },
+                            width: cardwidth,
+                            height: cardheight,
+                            backgroundColor: Color(0xFFe3a770),
+                          ),
                         ],
                       ),
                     ),

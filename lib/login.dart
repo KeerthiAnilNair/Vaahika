@@ -20,47 +20,57 @@ class _LoginState extends State<Login> {
   List<String> userTypes = ['Student', 'Driver', 'Admin'];
   String userName = '';
   String password = '';
+  // void handleSubmit() async {
+  //   if (userType == 'Student') {
+  //     var res = await http.post(
+  //         Uri.parse("http://localhost:8000/student-login"),
+  //         headers: <String, String>{
+  //           'Content-Type': 'application/json; charset=UTF-8',
+  //         },
+  //         body: jsonEncode(
+  //             <String, String>{'userName': userName, 'password': password}));
+  //     var userData = json.decode(res.body);
+  //     print(userData);
+  //     if (userData['status'] == "ok") {
+  //       storage.setItem('token', userData['token']);
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => StudentHome()),
+  //       );
+  //     } else {
+  //       print(userData['msg']);
+  //     }
+  //   } else if (userType == 'Driver') {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => DriverHome()),
+  //     );
+  //   } else if (userType == 'Admin') {
+  //     var res = await http.post(Uri.parse("http://localhost:8000/admin-login"),
+  //         headers: <String, String>{
+  //           'Content-Type': 'application/json; charset=UTF-8',
+  //         },
+  //         body: jsonEncode(
+  //             <String, String>{'email': userName, 'password': password}));
+  //     var userData = json.decode(res.body);
+
+  //     if (userData['status'] == "ok") {
+  //       storage.setItem('token', userData['token']);
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => AdminHome()),
+  //       );
+  //     }
+  //   }
+  // }
+
   void handleSubmit() async {
     if (userType == 'Student') {
-      var res = await http.post(
-          Uri.parse("http://localhost:8000/student-login"),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(
-              <String, String>{'userName': userName, 'password': password}));
-      var userData = json.decode(res.body);
-      print(userData);
-      if (userData['status'] == "ok") {
-        storage.setItem('token', userData['token']);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => StudentHome()),
-        );
-      } else {
-        print(userData['msg']);
-      }
-    } else if (userType == 'Driver') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => DriverHome()),
-      );
+      await Navigator.push(context, MaterialPageRoute(builder: (context) => StudentHome()));
     } else if (userType == 'Admin') {
-      var res = await http.post(Uri.parse("http://localhost:8000/admin-login"),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(
-              <String, String>{'email': userName, 'password': password}));
-      var userData = json.decode(res.body);
-
-      if (userData['status'] == "ok") {
-        storage.setItem('token', userData['token']);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => AdminHome()),
-        );
-      }
+      await Navigator.push(context, MaterialPageRoute(builder: (context) => AdminHome()));
+    } else {
+      await Navigator.push(context, MaterialPageRoute(builder: (context) => DriverHome()));
     }
   }
 
