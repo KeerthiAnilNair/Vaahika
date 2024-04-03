@@ -71,7 +71,7 @@ class StudentHome extends StatelessWidget {
                             imagePath: 'assets/images/personaldetails.png',
                             title: 'Personal Details',
                             onTap: () {
-                              Navigator.pushReplacement(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
@@ -93,7 +93,7 @@ class StudentHome extends StatelessWidget {
                                 admissionNumber: 'ABCD1234',
                                 fees: 500,
                               );
-                              Navigator.pushReplacement(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
@@ -110,10 +110,10 @@ class StudentHome extends StatelessWidget {
                             imagePath: 'assets/images/checkroute.png',
                             title: 'Check Route',
                             onTap: () {
-                              Navigator.pushReplacement(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const CheckRoute(),
+                                  builder: (context) => CheckRoute(),
                                 ),
                               );
                             },

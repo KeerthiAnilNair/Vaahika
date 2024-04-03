@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, avoid_print, use_build_context_synchronously
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/gestures.dart';
@@ -8,8 +10,10 @@ import 'package:sample_project/adminhome.dart';
 import 'package:sample_project/driverhome.dart';
 
 class SignUp extends StatefulWidget {
+  const SignUp({super.key});
+
   @override
-  _SignUpState createState() => _SignUpState();
+  State<SignUp> createState() => _SignUpState();
 }
 
 class _SignUpState extends State<SignUp> {
@@ -17,16 +21,18 @@ class _SignUpState extends State<SignUp> {
 
   List<String> userTypes = ['Student', 'Driver', 'Admin'];
 
-  void handleSubmit() async{
+  void handleSubmit() async {
     if (userType == 'Student') {
-      final res=await http.post(Uri.parse("http://localhost:8000/create-student"),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'userName': "a",
-        'password': "123",
-      }),);
+      final res = await http.post(
+        Uri.parse("http://localhost:8000/create-student"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'userName': "a",
+          'password': "123",
+        }),
+      );
       print(res.body);
       Navigator.push(
         context,
