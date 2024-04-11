@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -21,26 +23,28 @@ class _StudentPersonalDetailsState extends State<StudentPersonalDetails> {
 
   var stop='';
   bool loading=false;
-  late Map<String,dynamic> Student;
+  late Map<String,dynamic> student;
   
 
  Future<void> getStudent() async{
     LocalStorage storage = LocalStorage('data');
     final token=storage.getItem('token');
 
-    var res=await http.get(Uri.parse("http://localhost:8000/student/me"),
+    var res=await http.get(Uri.parse('https://bus-scheduling-backend.vercel.app/api/user/me'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization':token,
+        'Authorization': token,
       },
     );
 
     var studentData=json.decode(res.body);
+    print(studentData);
 
     if(studentData['status']=="ok"){
       setState(() {
-        Student=studentData["data"];
-        stop=studentData['stop']['stop_name'];
+        student=studentData['data']['user'];
+        print(student);
+        // stop=studentData['data']['stop']['stop_name'];
         loading=false;
       });
      
@@ -89,7 +93,7 @@ class _StudentPersonalDetailsState extends State<StudentPersonalDetails> {
             ),
             SizedBox(height: 16.0),
             Text(
-              Student['studentName'].toString(),
+              student['name'].toString(),
               style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8.0),
@@ -103,25 +107,25 @@ class _StudentPersonalDetailsState extends State<StudentPersonalDetails> {
               style: TextStyle(fontSize: 18.0),
             ),
             SizedBox(height: 8.0),
+            // Text(
+            //   'Phone Number: ${student['phone']}',
+            //   style: TextStyle(fontSize: 18.0),
+            // ),
+            SizedBox(height: 8.0),
             Text(
-              'Phone Number: ${Student['phone']}',
+              'Email: ${student['email']}',
               style: TextStyle(fontSize: 18.0),
             ),
             SizedBox(height: 8.0),
-            Text(
-              'Email: ${Student['email']}',
-              style: TextStyle(fontSize: 18.0),
-            ),
+            // Text(
+            //   'Address: ${student['address']}',
+            //   style: TextStyle(fontSize: 18.0),
+            // ),
             SizedBox(height: 8.0),
-            Text(
-              'Address: ${Student['address']}',
-              style: TextStyle(fontSize: 18.0),
-            ),
-            SizedBox(height: 8.0),
-            Text(
-              'Bus Stop: $stop',
-              style: TextStyle(fontSize: 18.0),
-            ),
+            // Text(
+            //   'Bus Stop: $stop',
+            //   style: TextStyle(fontSize: 18.0),
+            // ),
             SizedBox(height: 16.0),
             SizedBox(height: 8.0),
             ElevatedButton(
