@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sample_project/alloted_route.dart';
-import 'package:sample_project/check_route.dart';
 import 'package:sample_project/alloted_bus.dart';
 import 'package:sample_project/student_personal_details.dart';
+import 'package:sample_project/setavailability.dart';
 import 'widgets.dart';
 
 class DriverHome extends StatelessWidget {
@@ -97,7 +97,7 @@ class DriverHome extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const DriverHome(),
+                          builder: (context) => SetAvailability(),
                         ),
                       );
                     },

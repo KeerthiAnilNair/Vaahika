@@ -26,7 +26,7 @@ class _LoginState extends State<Login> {
   void handleSubmit() async {
     if (userType == 'Student') {
       var res = await http.post(
-          Uri.parse("http://localhost:8000/student-login"),
+          Uri.parse("http://localhost:8001/student-login"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -49,7 +49,7 @@ class _LoginState extends State<Login> {
         MaterialPageRoute(builder: (context) => DriverHome()),
       );
     } else if (userType == 'Admin') {
-      var res = await http.post(Uri.parse("http://localhost:8000/admin-login"),
+      var res = await http.post(Uri.parse("http://localhost:8001/admin-login"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
