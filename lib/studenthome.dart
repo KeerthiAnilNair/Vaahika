@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:sample_project/check_route.dart';
 import 'package:sample_project/feepayment.dart';
+import 'package:sample_project/updatelocation.dart';
 import 'package:sample_project/student_personal_details.dart';
 import 'widgets.dart';
 
@@ -128,7 +129,7 @@ class StudentHome extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => StudentHome(),
+                                  builder: (context) => UpdateLocation(),
                                 ),
                               );
                             },
