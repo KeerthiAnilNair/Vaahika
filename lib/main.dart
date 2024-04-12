@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sample_project/login.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+  ));
   runApp(MyApp());
 }
 
@@ -18,7 +24,12 @@ class MyApp extends StatelessWidget {
           color: Colors.blue[800],
         ),
       ),
-      home: Login(),
+      home: AnimatedSplashScreen(
+        duration: 1000,
+        nextScreen: const Login(),
+        splash: 'assets/images/light.png',
+        splashTransition: SplashTransition.rotationTransition,
+      ),
     );
   }
 }

@@ -1,6 +1,5 @@
-// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, use_build_context_synchronously, avoid_print, prefer_const_literals_to_create_immutables
 
-import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/signup.dart';
@@ -13,8 +12,10 @@ import 'package:localstorage/localstorage.dart';
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 
 class Login extends StatefulWidget {
+  const Login({super.key});
+
   @override
-  _LoginState createState() => _LoginState();
+  State<Login> createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
@@ -24,24 +25,26 @@ class _LoginState extends State<Login> {
   String userName = '';
   String password = '';
   void handleSubmit() async {
+    String baseUrl = 'https://bus-scheduling-backend.vercel.app/api';
+    print('$userName\n$password');
     if (userType == 'Student') {
-      var res = await http.post(
-          Uri.parse("http://localhost:8001/student-login"),
+      var res = await http.post(Uri.parse('$baseUrl/user/signin'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(
-              <String, String>{'userName': userName, 'password': password}));
-      var userData = json.decode(res.body);
-      print(userData);
-      if (userData['status'] == "ok") {
-        storage.setItem('token', userData['token']);
+              <String, String>{'userID': userName, 'password': password}));
+      var userData = await json.decode(json.encode(res.body));
+      var responseData = json.decode(userData);
+
+      if (responseData['status'] == "ok") {
+        storage.setItem('token', responseData['data']['token']);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => StudentHome()),
         );
       } else {
-        print(userData['msg']);
+        print(responseData['msg']);
       }
     } else if (userType == 'Driver') {
       Navigator.push(
@@ -49,16 +52,18 @@ class _LoginState extends State<Login> {
         MaterialPageRoute(builder: (context) => DriverHome()),
       );
     } else if (userType == 'Admin') {
-      var res = await http.post(Uri.parse("http://localhost:8001/admin-login"),
+      var res = await http.post(Uri.parse('$baseUrl/user/signin'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(
-              <String, String>{'email': userName, 'password': password}));
-      var userData = json.decode(res.body);
-
-      if (userData['status'] == "ok") {
-        storage.setItem('token', userData['token']);
+              <String, String>{'userID': userName, 'password': password}));
+      var userData = await json.decode(json.encode(res.body));
+      print(userData);
+      var responseData = json.decode(userData);
+      print(responseData);
+      if (responseData['status'] == "ok") {
+        storage.setItem('token', responseData['data']['token']);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => AdminHome()),
@@ -82,177 +87,291 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    double bottom = MediaQuery.of(context).viewInsets.bottom;
     double width100 = MediaQuery.of(context).size.width;
-    double height100 = MediaQuery.of(context).size.height;
+    double height100 = MediaQuery.of(context).size.height - bottom * 0.5;
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 30.0,
-            right: 30,
-          ),
-          child: Align(
-            alignment: Alignment.center,
-            child: Container(
-              width: width100 * 0.9,
-              height: height100 * 0.6,
-              child: Card(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Vaahika',
-                      style: TextStyle(
-                          fontFamily: 'LakkiReddy',
-                          fontSize: 48,
-                          color: Colors.blue[800]),
-                    ),
-                    Text(
-                      'Login',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Arvo',
-                        fontSize: 36,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Padding(
+            padding: EdgeInsets.only(
+                top: width100 * 0.1,
+                left: width100 * 0.05,
+                right: width100 * 0.05),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: width100 * 0.325,
+                  padding: EdgeInsets.only(left: width100 * 0.01),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ImageIcon(
+                        AssetImage('assets/images/light.png'),
+                        size: width100 * 0.1,
                       ),
-                    ),
-                    Container(
-                      width: width100 * 0.7,
-                      child: CustomDropdown<String>(
-                          decoration: CustomDropdownDecoration(
-                            closedBorder:
-                                Border.all(color: Colors.grey, width: 1.25),
-                            expandedBorder:
-                                Border.all(color: Colors.grey, width: 1.25),
+                      ImageIcon(
+                        AssetImage('assets/images/typo.png'),
+                        size: width100 * 0.2,
+                      )
+                    ],
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    height: height100 * 0.75,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // Text(
+                        //   'Vaahika',
+                        //   style: TextStyle(
+                        //       fontFamily: 'Anton',
+                        //       fontSize: width100 * 0.15,
+                        //       color: Colors.blue[800]),
+                        // ),
+                        SizedBox(height: height100 * 0.04),
+                        Card(
+                          color: Color(0xFF336cef),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(height100 * 0.08),
+                              topRight: Radius.circular(height100 * 0.08),
+                              bottomRight: Radius.circular(height100 * 0.08),
+                              bottomLeft: Radius.circular(height100 * 0.01),
+                            ),
                           ),
-                          hintText: 'Select User Type',
-                          hintBuilder: (context, hint) {
-                            return Row(
+                          child: Container(
+                            padding: EdgeInsets.all(height100 * 0.02),
+                            height: height100 * 0.55,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  hint,
-                                  style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: width100 * 0.038),
+                                Container(
+                                  width: width100 * 0.9,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Login',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            letterSpacing: 1.2,
+                                            fontFamily: 'Poppins',
+                                            fontSize: width100 * 0.09,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white),
+                                      ),
+                                      SizedBox(height: height100 * 0.05),
+                                      CustomDropdown<String>(
+                                          decoration: CustomDropdownDecoration(
+                                            closedFillColor: Color(0xFF336cef),
+                                            expandedFillColor:
+                                                Color(0xFF336cef),
+                                            expandedSuffixIcon: Icon(
+                                              Icons.keyboard_arrow_up_outlined,
+                                              color: Colors.white,
+                                            ),
+                                            closedSuffixIcon: Icon(
+                                              Icons
+                                                  .keyboard_arrow_down_outlined,
+                                              color: Colors.white,
+                                            ),
+                                            closedBorder: Border.all(
+                                                color: Colors.white,
+                                                width: 1.25),
+                                            expandedBorder: Border.all(
+                                                color: Colors.white,
+                                                width: 1.25),
+                                          ),
+                                          hintText: 'Select User Type',
+                                          hintBuilder: (context, hint) {
+                                            return Row(
+                                              children: [
+                                                Text(
+                                                  hint,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontFamily: 'Poppins',
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize:
+                                                          width100 * 0.038),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                          listItemBuilder: (context, item,
+                                              isSelected, onItemSelect) {
+                                            return Row(
+                                              children: [
+                                                Text(
+                                                  item,
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontFamily: 'Poppins',
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: width100 * 0.038,
+                                                  ),
+                                                )
+                                              ],
+                                            );
+                                          },
+                                          headerBuilder:
+                                              (context, selectedItem) {
+                                            return Row(
+                                              children: [
+                                                Text(
+                                                  selectedItem,
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontFamily: 'Poppins',
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: width100 * 0.038,
+                                                  ),
+                                                )
+                                              ],
+                                            );
+                                          },
+                                          items: userTypes,
+                                          onChanged: (String? newValue) {
+                                            setState(() {
+                                              userType = newValue!;
+                                            });
+                                          }),
+                                      SizedBox(height: height100 * 0.02),
+                                      TextField(
+                                        style: TextStyle(color: Colors.white),
+                                        cursorColor: Colors.white,
+                                        decoration: InputDecoration(
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                height100 * 0.015),
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                height100 * 0.015),
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                          ),
+                                          contentPadding:
+                                              EdgeInsets.all(height100 * 0.016),
+                                          labelText: 'Username',
+                                          labelStyle: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: 'Poppins',
+                                            fontSize: width100 * 0.038,
+                                          ),
+                                        ),
+                                        onChanged: (String newValue) {
+                                          setState(() {
+                                            userName = newValue;
+                                          });
+                                        },
+                                      ),
+                                      SizedBox(height: height100 * 0.02),
+                                      TextField(
+                                        style: TextStyle(color: Colors.white),
+                                        cursorColor: Colors.white,
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                height100 * 0.015),
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                height100 * 0.015),
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                          ),
+                                          contentPadding:
+                                              EdgeInsets.all(height100 * 0.016),
+                                          labelText: 'Password',
+                                          labelStyle: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: 'Poppins',
+                                            fontSize: width100 * 0.038,
+                                          ),
+                                        ),
+                                        onChanged: (String newValue) {
+                                          setState(() {
+                                            password = newValue;
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: height100 * 0.02),
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                    minimumSize: MaterialStateProperty.all(Size(
+                                        width100 * 0.75, height100 * 0.05)),
+                                  ),
+                                  onPressed: handleSubmit,
+                                  child: Text('SUBMIT',
+                                      style: TextStyle(
+                                          letterSpacing: 1.5,
+                                          fontFamily: 'Poppins',
+                                          fontSize: height100 * 0.02,
+                                          color: Colors.black)),
                                 ),
                               ],
-                            );
-                          },
-                          listItemBuilder:
-                              (context, item, isSelected, onItemSelect) {
-                            return Row(
-                              children: [
-                                Text(
-                                  item,
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: width100 * 0.038,
-                                  ),
-                                )
-                              ],
-                            );
-                          },
-                          headerBuilder: (context, selectedItem) {
-                            return Row(
-                              children: [
-                                Text(
-                                  selectedItem,
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: width100 * 0.038,
-                                  ),
-                                )
-                              ],
-                            );
-                          },
-                          items: userTypes,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              userType = newValue!;
-                            });
-                          }),
-                    ),
-                    Text(
-                      'Username : ',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontFamily: 'Arvo',
-                        fontSize: 20,
-                      ),
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Enter Username',
-                      ),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          userName = newValue;
-                        });
-                      },
-                    ),
-                    const Text(
-                      'Password : ',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontFamily: 'Arvo',
-                        fontSize: 20,
-                      ),
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Enter Password',
-                      ),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          password = newValue;
-                        });
-                      },
-                    ),
-                    ElevatedButton(
-                      onPressed: handleSubmit,
-                      child: Text('SUBMIT'),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "Don't have an account? ",
-                            style: TextStyle(
-                                fontFamily: 'Arvo',
-                                fontSize: 16,
-                                color: Colors.black),
-                          ),
-                          TextSpan(
-                            text: "Sign Up ",
-                            style: TextStyle(
-                              fontFamily: 'Arvo',
-                              fontSize: 16,
-                              color: Colors.lightBlue,
-                              decoration: TextDecoration.underline,
                             ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SignUp()),
-                                );
-                              },
                           ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: height100 * 0.02),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "Don't have an account? ",
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: width100 * 0.035,
+                                    color: Colors.black),
+                              ),
+                              TextSpan(
+                                text: "Sign Up ",
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: width100 * 0.035,
+                                  color: Colors.lightBlue,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SignUp()),
+                                    );
+                                  },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
         ),
