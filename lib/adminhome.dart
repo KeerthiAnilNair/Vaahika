@@ -35,7 +35,7 @@ class AdminHome extends StatelessWidget {
               width: width100 * 0.85,
               cardColor: Color(0xFFdaf3ed),
               name: 'Admin',
-              admissionNumber: '123456', // Provide admissionNumber here
+              admissionNumber: 'AD3471', // Provide admissionNumber here
               profileImage: 'assets/images/user.png',
             ),
             SizedBox(height: height100 * 0.03),

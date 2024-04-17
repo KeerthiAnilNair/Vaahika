@@ -12,9 +12,9 @@ class ManageBus extends StatelessWidget {
         itemBuilder: (context, index) {
           // Dummy data for buses, drivers, and routes
           String busNo = 'Bus ${index + 1}';
-          String busNumberPlate = 'ABC ${1000 + index}';
-          String driverName = 'Driver ${index + 1}';
-          String driverId = 'DRV ${1000 + index}';
+          String busNumberPlate = 'KL 01 BH ${1000 + index}';
+          String driverName = 'Driver${index + 1}';
+          String driverId = 'D82f${index + 1}';
           String routeNo = 'Route ${index + 1}';
 
           return Card(

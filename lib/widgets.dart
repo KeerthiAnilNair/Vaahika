@@ -54,7 +54,7 @@ class StudentDetailsCard extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Admission No: $admissionNumber',
+                    'ID : $admissionNumber',
                     style: TextStyle(fontFamily: 'Arvo',fontSize: 16),
                   ),
                 ],

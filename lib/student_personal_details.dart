@@ -16,7 +16,11 @@ class _StudentPersonalDetailsState extends State<StudentPersonalDetails> {
   final String profileImageUrl =
       'https://example.com/profile-picture.jpg'; 
 
-  final String year = '2023'; 
+  final String year = 'S8';
+  final String age = '22';
+  final String phone = '9544270166';
+  final String address = 'Palayam';
+  final String gender = 'Female';
  // Replace with your year
   final String department = 'Computer Science'; 
  // Replace with your department
@@ -83,7 +87,7 @@ class _StudentPersonalDetailsState extends State<StudentPersonalDetails> {
         padding: EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CircleAvatar(
               radius: 80.0,
@@ -96,9 +100,19 @@ class _StudentPersonalDetailsState extends State<StudentPersonalDetails> {
               student['name'].toString(),
               style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8.0),
-            Text(
-              'Year: $year',
+                  SizedBox(height: 18.0),
+                  Text(
+                    'Age: $age',
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                  SizedBox(height: 8.0),
+                  Text(
+                    'Gender: $gender',
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                  SizedBox(height: 8.0),
+                  Text(
+                    'Semester: $year',
               style: TextStyle(fontSize: 18.0),
             ),
             SizedBox(height: 8.0),
@@ -107,37 +121,26 @@ class _StudentPersonalDetailsState extends State<StudentPersonalDetails> {
               style: TextStyle(fontSize: 18.0),
             ),
             SizedBox(height: 8.0),
-            // Text(
-            //   'Phone Number: ${student['phone']}',
-            //   style: TextStyle(fontSize: 18.0),
-            // ),
+                  Text(
+                    'Phone Number: $phone',
+                    style: TextStyle(fontSize: 18.0),
+                  ),
             SizedBox(height: 8.0),
             Text(
               'Email: ${student['email']}',
               style: TextStyle(fontSize: 18.0),
             ),
             SizedBox(height: 8.0),
-            // Text(
-            //   'Address: ${student['address']}',
-            //   style: TextStyle(fontSize: 18.0),
-            // ),
+                  Text(
+                    'Bus Stop : $address',
+                    style: TextStyle(fontSize: 18.0),
+                  ),
             SizedBox(height: 8.0),
             // Text(
             //   'Bus Stop: $stop',
             //   style: TextStyle(fontSize: 18.0),
             // ),
-            SizedBox(height: 16.0),
-            SizedBox(height: 8.0),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const StudentPersonalDetails()),
-                );
-              },
-              child: Text('Edit Pofile'),
-            ),
+            
           ],
         ),
       ),

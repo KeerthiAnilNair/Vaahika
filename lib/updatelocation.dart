@@ -10,13 +10,15 @@ class _UpdateLocationState extends State<UpdateLocation> {
   String _newLocation = '';
 
   List<String> _locations = [
-    'Sreekaryam',
-    'Ulloor',
-    'Pattom',
-    'Palayam',
     'Kazhakkuttam',
     'Kulathoor',
+    'Medical College',
+    'Pattom',
+    'Palayam',
+    'Pettah',
+    'Sreekaryam',
     'Thampanoor',
+    'Ulloor',
   ];
 
   @override

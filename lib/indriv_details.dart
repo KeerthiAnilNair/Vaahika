@@ -4,11 +4,11 @@ class DriverDetailsAdmin extends StatelessWidget {
   const DriverDetailsAdmin({super.key});
   final String profileImageUrl =
       'https://example.com/profile-picture.jpg'; // Replace with your profile picture URL
-  final String name = 'John Doe'; // Replace with your name
-  final String year = '2023'; // Replace with your year
+  final String name = 'Driver3'; // Replace with your name
+  final String year = '38'; // Replace with your year
   final String department = 'Computer Science'; // Replace with your department
-  final String phoneNumber = '+1 234 567 890'; // Replace with your phone number
-  final String emailId = 'john.doe@example.com'; // Replace with your email ID
+  final String phoneNumber = '9605242189'; // Replace with your phone number
+  final String emailId = 'driver3@gmail.com'; // Replace with your email ID
   final String address =
       '123 Main Street, City, Country'; // Replace with your address
 
@@ -43,12 +43,7 @@ class DriverDetailsAdmin extends StatelessWidget {
             ),
             SizedBox(height: 8.0),
             Text(
-              'Year: $year',
-              style: TextStyle(fontSize: 18.0),
-            ),
-            SizedBox(height: 8.0),
-            Text(
-              'Department: $department',
+              'Age : $year',
               style: TextStyle(fontSize: 18.0),
             ),
             SizedBox(height: 8.0),
